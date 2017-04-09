@@ -1,0 +1,13 @@
+﻿Сборка начата 09.04.2017 21:04:38.
+     1>Проект "P:\VS_2013_PR\My_CP\My_CP\My_CP.vcxproj" в узле 2 (целевые объекты Build).
+     1>Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"P:\VS_2013_PR\My_CP\Debug\My_CP.exe" /INCREMENTAL /NOLOGO /ASSEMBLYRESOURCE:Debug\My_CP.MainForm.resources /ASSEMBLYRESOURCE:Debug\My_CP.Records.resources /ASSEMBLYRESOURCE:Debug\My_CP.Settings.resources /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"P:\VS_2013_PR\My_CP\Debug\My_CP.pdb" /ASSEMBLYDEBUG /TLBID:1 /ENTRY:"main" /DYNAMICBASE /FIXED:NO /NXCOMPAT /MACHINE:X86 Debug\MainForm.obj
+         Debug\Records.obj
+         Debug\Settings.obj
+         "Debug\.NETFramework,Version=v4.5.AssemblyAttributes.obj"
+         My_CP.vcxproj -> P:\VS_2013_PR\My_CP\Debug\My_CP.exe
+     1>Сборка проекта "P:\VS_2013_PR\My_CP\My_CP\My_CP.vcxproj" завершена (целевые объекты Build).
+
+Сборка успешно завершена.
+
+Затраченное время: 00:00:01.05
