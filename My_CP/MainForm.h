@@ -18,7 +18,7 @@ bool IsLoseGame(int **Field, int n);
 bool IsWinGame(int **Field, int n, int maxn);
 int ** BackupField(int **Field, int n);
 void FillGrid(int **grid, int n, int pos);
-void UpdateGreed(int **grid, int pos);
+void UpdateGreed(int **grid, int pos,int n);
 
 namespace My_CP {
 	using namespace System;
@@ -506,29 +506,55 @@ void DrawField()
 private: System::Void pictureBox1_Paint(System::Object^  sender, System::Windows::Forms::PaintEventArgs^  e) {
 			 if (Is_Game_Started)
 			 {
-				 int x = 10;
-				 int y = 10;
-				 String ^n;
-				 StringFormat^ drawFormat = gcnew StringFormat;
-				 drawFormat->FormatFlags = StringFormatFlags::DirectionVertical;
-				 System::Drawing::Font^ drawFont = gcnew System::Drawing::Font("Arial", 16);
-				 SolidBrush^ drawBrush = gcnew SolidBrush(Color::Black);
-				 for (int i = 0; i < 4; i++)
+				 if (FieldSize == 4)
 				 {
-					 for (int j = 0; j < 4; j++)
+					 int x = 10;
+					 int y = 10;
+					 String ^n;
+					 StringFormat^ drawFormat = gcnew StringFormat;
+					 drawFormat->FormatFlags = StringFormatFlags::DirectionVertical;
+					 System::Drawing::Font^ drawFont = gcnew System::Drawing::Font("Arial", 16);
+					 SolidBrush^ drawBrush = gcnew SolidBrush(Color::Black);
+					 for (int i = 0; i < 4; i++)
 					 {
-						 e->Graphics->DrawRectangle(System::Drawing::Pens::Red, x, y, 75, 75);
-						 n = System::Convert::ToString(Field[i][j]);
-						 PointF drawPoint = PointF(x + 35, y + 35);
-						 e->Graphics->DrawString(n, drawFont, System::Drawing::Brushes::Black, drawPoint);
-						 x += 85;
+						 for (int j = 0; j < 4; j++)
+						 {
+							 e->Graphics->DrawRectangle(System::Drawing::Pens::Red, x, y, 75, 75);
+							 n = System::Convert::ToString(Field[i][j]);
+							 PointF drawPoint = PointF(x + 35, y + 35);
+							 e->Graphics->DrawString(n, drawFont, System::Drawing::Brushes::Black, drawPoint);
+							 x += 85;
+						 }
+						 x = 10;
+						 y += 85;
 					 }
-					 x = 10;
-					 y += 85;
 				 }
+					 if (FieldSize == 8)
+					 {
+						 int x = 10;
+						 int y = 10;
+						 String ^n;
+						 StringFormat^ drawFormat = gcnew StringFormat;
+						 drawFormat->FormatFlags = StringFormatFlags::DirectionVertical;
+						 System::Drawing::Font^ drawFont = gcnew System::Drawing::Font("Arial", 16);
+						 SolidBrush^ drawBrush = gcnew SolidBrush(Color::Black);
+						 for (int i = 0; i < 8; i++)
+						 {
+							 for (int j = 0; j < 8; j++)
+							 {
+								 e->Graphics->FillRectangle(gcnew SolidBrush(Color::Red),x,y,46,46);
+								 n = System::Convert::ToString(Field[i][j]);
+								 PointF drawPoint = PointF(x + 15, y + 15);
+								 e->Graphics->DrawString(n, drawFont, System::Drawing::Brushes::Black, drawPoint);
+								 x += 56;
+							 }
+							 x = 10;
+							 y += 56;
+						 }
+				
+					 }
+			
 			 }
-			 e->Graphics->DrawRectangle(System::Drawing::Pens::Red, 10, 10, 10 + 65, 10 + 65);
-			 e->Graphics->DrawRectangle(System::Drawing::Pens::Red, 95, 10, 10 + 65, 10 + 65);
 }
 };
 

@@ -71,7 +71,7 @@ void MoveNumbers(int **Field, int n, int pos)
 
 	BackupField(Field, n);
 	FillGrid(Field, n, pos);
-	UpdateGreed(Field, pos);
+	UpdateGreed(Field, pos,n);
 	FillGrid(Field, n, pos);
 }
 
@@ -165,7 +165,7 @@ void FillGrid(int **grid, int n,int pos)
 	}
 }
 
-void UpdateGreed(int **grid, int pos)
+void UpdateGreed(int **grid, int pos,int n)
 {
 
 	switch (pos)
