@@ -17,10 +17,10 @@ void main(array<String^>^ arg) {
 	My_CP::MainForm form;
 	Application::Run(%form);
 }
-void GetFirstRandom(int &a, int &b, int &c, int &d, int &e, int &f,int n, bool Is_3_ok) // Вызываеться в начале игры устанавливает начальные плитки
+void GetFirstRandom(int &a, int &b, int &c, int &d, int &e, int &f,int n, bool Is_3_ok) // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 {
-	/* Сдесь определяем координаты и величину первых двух плиток
-	В том числе проверяем на их совпадение*/
+	/* пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+	пїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ*/
 	a = rand() % n;
 	b = rand() % n;
 	int firstn, secondn;
@@ -68,118 +68,13 @@ void GetFirstRandom(int &a, int &b, int &c, int &d, int &e, int &f,int n, bool I
 
 void MoveNumbers(int **Field, int n, int pos)
 {
-	/*for (int i = n - 1; i >= 0; i--)
-	for (int j = n - 1; j >= 0; j--)
-	{
-		if (Field[i][j] != 0)
-		{
-		//	cout << i << j;
-			RealMove(Field, n, i, j, pos);
-		}
-	}*/
+
 	BackupField(Field, n);
 	FillGrid(Field, n, pos);
 	UpdateGreed(Field, pos);
 	FillGrid(Field, n, pos);
 }
 
-/*void RealMove(int **Field, int n, int x, int y,int pos)
-{
-	switch (pos)
-	{
-	case 1:
-		for (; x > 0; x--)
-		{
-			if (Field[x - 1][y] == 0)
-			{
-				Field[x - 1][y] = Field[x][y];
-				Field[x][y] = 0;
-			}
-			if (Field[x - 1][y] != 0)
-			{
-				if (Field[x][y] == Field[x - 1][y])
-				{
-					Field[x - 1][y] += Field[x][y];
-					Field[x][y] = 0;
-				}
-			}
-		}
-		for (int i = 1; i <= x; i++)
-		{
-			if (Field[i - 1][y] == 0)
-			{
-				Field[i - 1][y] == Field[i][y];
-				Field[i][y] = 0;
-			}
-			if (Field[i - 1][x] != 0)
-			{
-				if (Field[i][y] == Field[i - 1][y])
-				{
-					Field[i - 1][y] += Field[i - 1][y];
-					Field[i][y] = 0;
-				}
-			}
-		}
-		break;
-	case 2:
-		for (; x < n - 1; x++)
-		{
-			if (Field[x + 1][y] == 0)
-			{
-				Field[x + 1][y] = Field[x][y];
-				Field[x][y] = 0;
-			}
-			if (Field[x + 1][y] != 0)
-			{
-				if (Field[x][y] == Field[x + 1][y])
-				{
-					Field[x + 1][y] += Field[x][y];
-					Field[x][y] = 0;
-				}
-			}
-		}
-		break;
-	case 3:
-		for (; y > 0; y--)
-		{
-			if (Field[x][y - 1] == 0)
-			{
-				Field[x][y - 1] = Field[x][y];
-				Field[x][y] = 0;
-			}
-			if (Field[x][y - 1] != 0)
-			{
-				if (Field[x][y] == Field[x][y - 1])
-				{
-					Field[x][y - 1] += Field[x][y];
-					Field[x][y] = 0;
-				}
-			}
-		}
-		break;
-	case 4:
-		for (; y < n - 1; y++)
-		{
-			if (Field[x][y + 1] == 0)
-			{
-				Field[x][y + 1] = Field[x][y];
-				Field[x][y] = 0;
-			}
-			if (Field[x][y + 1] != 0)
-			{
-				if (Field[x][y] == Field[x][y + 1])
-				{
-					Field[x][y + 1] += Field[x][y];
-					Field[x][y] = 0;
-				}
-			}
-		}
-		break;
-	default:
-		cout << "Error" << endl;
-		break;
-	}
-}*/
 int ** BackupField(int **Field, int n)
 {
 	int **BField = new int *[n];
@@ -200,12 +95,12 @@ void FillGrid(int **grid, int n,int pos)
 	switch (pos)
 	{
 	case 1:
-		for (int i = 0; i<4; i++)
-		for (int j = 0; j<4; j++)
+		for (int i = 0; i<n; i++)
+		for (int j = 0; j<n; j++)
 		{
 			if (!grid[j][i])
 			{
-				for (int k = j + 1; k<4; k++)
+				for (int k = j + 1; k<n; k++)
 				if (grid[k][i])
 				{
 					grid[j][i] = grid[k][i];
@@ -217,8 +112,8 @@ void FillGrid(int **grid, int n,int pos)
 		}break;
 
 	case 2:
-		for (int i = 0; i<4; i++)
-		for (int j = 3; j >= 0; j--)
+		for (int i = 0; i<n; i++)
+		for (int j = n - 1; j >= 0; j--)
 		{
 			if (!grid[j][i])
 			{
@@ -233,12 +128,12 @@ void FillGrid(int **grid, int n,int pos)
 
 		}break;
 	case 3:
-		for (int i = 0; i<4; i++)
-		for (int j = 0; j<4; j++)
+		for (int i = 0; i<n; i++)
+		for (int j = 0; j<n; j++)
 		{
 			if (!grid[i][j])
 			{
-				for (int k = j + 1; k<4; k++)
+				for (int k = j + 1; k<n; k++)
 				if (grid[i][k])
 				{
 					grid[i][j] = grid[i][k];
@@ -251,8 +146,8 @@ void FillGrid(int **grid, int n,int pos)
 
 
 	case 4:
-		for (int i = 0; i<4; i++)
-		for (int j = 3; j >= 0; j--)
+		for (int i = 0; i<n; i++)
+		for (int j = n - 1; j >= 0; j--)
 		{
 			if (!grid[i][j])
 			{
@@ -276,8 +171,8 @@ void UpdateGreed(int **grid, int pos)
 	switch (pos)
 	{
 	case 1:
-		for (int i = 0; i<4; i++)
-		for (int j = 0; j<3; j++)
+		for (int i = 0; i<n; i++)
+		for (int j = 0; j<n - 1; j++)
 		{
 			if (grid[j][i] && grid[j][i] == grid[j + 1][i])
 			{
@@ -288,8 +183,8 @@ void UpdateGreed(int **grid, int pos)
 		}break;
 
 	case 2:
-		for (int i = 0; i<4; i++)
-		for (int j = 3; j>0; j--)
+		for (int i = 0; i<n; i++)
+		for (int j = n - 1; j>0; j--)
 		{
 			if (grid[j][i] && grid[j][i] == grid[j - 1][i])
 			{
@@ -300,8 +195,8 @@ void UpdateGreed(int **grid, int pos)
 		}break;
 
 	case 3:
-		for (int i = 0; i<4; i++)
-		for (int j = 0; j<3; j++)
+		for (int i = 0; i<n; i++)
+		for (int j = 0; j<n - 1; j++)
 		{
 			if (grid[i][j] && grid[i][j] == grid[i][j + 1])
 			{
@@ -313,8 +208,8 @@ void UpdateGreed(int **grid, int pos)
 		}break;
 
 	case 4:
-		for (int i = 0; i<4; i++)
-		for (int j = 3; j>0; j--)
+		for (int i = 0; i<n; i++)
+		for (int j = n - 1; j>0; j--)
 		{
 			if (grid[i][j] && grid[i][j] == grid[i][j - 1])
 			{
