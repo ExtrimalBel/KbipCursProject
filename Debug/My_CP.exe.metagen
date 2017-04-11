@@ -16,6 +16,20 @@ Assembly System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=
 	hash=None, flags=None
 Assembly System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
 	hash=None, flags=None
+Class GField: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(Int32, Int32): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Methods:
+    GetFirstRandom(Boolean(HasFieldMarshal)): PrivateScope, Public, HideBySig
+    MoveNumbers(Int32): PrivateScope, Public, HideBySig
+    BackupField(): PrivateScope, Public, HideBySig
+    FillGrid(Int32): PrivateScope, Public, HideBySig
+    UpdateGreed(Int32): PrivateScope, Public, HideBySig
+    CountScore(): PrivateScope, Public, HideBySig
+    InsertRandom(): PrivateScope, Public, HideBySig
+    IsLoseGame(): PrivateScope, Public, HideBySig
+    IsWinGame(): PrivateScope, Public, HideBySig
+    GetElement(Int32, Int32): PrivateScope, Public, HideBySig
+    ClearField(): PrivateScope, Public, HideBySig
 Class My_CP.Settings: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
   :System.Windows.Forms.Form
     Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
@@ -29,4 +43,4 @@ Class My_CP.MainForm: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
     Int32 n : Public
     Int32 maxn : Public
     Boolean Is_Game_Started : Public
-    Int32** Field : Public
+    GField Field : Public

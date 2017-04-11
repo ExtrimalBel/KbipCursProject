@@ -4,6 +4,7 @@
 #include "Records.h"
 #include <ctime>
 #include <cstdlib>
+#include "GameField.h"
 #pragma once
 extern bool Is_3_Ok = false;
 extern int FieldSize = 4;
@@ -33,6 +34,7 @@ namespace My_CP {
 	/// <summary>
 	/// Сводка для MainForm
 	/// </summary>
+	
 	public ref class MainForm : public System::Windows::Forms::Form
 	{
 	public:
@@ -48,7 +50,7 @@ namespace My_CP {
 	private: System::Windows::Forms::ContextMenuStrip^  contextMenuStrip1;
 
 	public:
-		int **Field;
+		GField ^ Field;
 		MainForm(void)
 		{
 			/*
@@ -57,7 +59,6 @@ namespace My_CP {
 			// Инициализация игрового поля
 			InitializeComponent();
 			//
-			
 			//
 
 			
@@ -331,32 +332,15 @@ private: System::Void MainForm_KeyPress(System::Object^  sender, System::Windows
 
 private: System::Void StartBottom_Click(System::Object^  sender, System::EventArgs^  e) {
 			 
-			 int i, j;
-			 n = FieldSize;
-			 int **f = new int *[n]; // Поле игры
-			 for (i = 0; i < n; i++)
-			 {
-				 f[i] = new int[n];
-			 }
-			 for (i = 0; i < n; i++)
-			 for (j = 0; j < n; j++)
-			 {
-				 f[i][j] = 0;
-			 }
+			 Field = gcnew GField(FieldSize,MaxNumber);
+			 Field->GetFirstRandom(Is_3_Ok);
+			 /*
 			 Field = f;
-			 int a, b, c, d, g, s;
+			 
 			 GetFirstRandom(a, b, c, d, g, s, n,Is_3_Ok);
-			 Field[a][b] = g;
-			 Field[c][d] = s;
-			 system("cls");
-			 for (i = 0; i < n; i++)
-			 {
-				 for (j = 0; j < n; j++)
-				 {
-					 cout << setw(4) << Field[i][j];
-				 }
-				 cout << endl;
-			 }
+			 
+			 */
+			 Field->GetFirstRandom(Is_3_Ok);
 			 StartBottom->Visible = false;
 			 SettingsBottom->Visible = false;
 			 StopB->Visible = true;
@@ -367,21 +351,8 @@ private: System::Void StartBottom_Click(System::Object^  sender, System::EventAr
 			 DrawField();
 }
 private: System::Void StopB_Click(System::Object^  sender, System::EventArgs^  e) {
-			 int i, j;
-			 for (i = 0; i < n; i++)
-			 for (j = 0; j < n; j++)
-			 {
-				 Field[i][j] = 0;
-			 }
-			 system("cls");
-			 for (i = 0; i < n; i++)
-			 {
-				 for (j = 0; j < n; j++)
-				 {
-					 cout << setw(4) << Field[i][j];
-				 }
-				 cout << endl;
-			 }
+			 Field->ClearField();
+			 delete (Field);
 			 StartBottom->Visible = true;
 			 SettingsBottom->Visible = true;
 			 StopB->Visible = false;
@@ -425,42 +396,15 @@ private: System::Void MainForm_KeyDown(System::Object^  sender, System::Windows:
 			 {
 				 
 				 textBox1->Text = System::Convert::ToString(pos);
-				 MoveNumbers(Field, n, pos);
-				 int i, j;
-				 system("cls");
-				 int a1, a2;
-				 GetRandom(Field,n,a1, a2);
-				 int insertn;
-				 if (Is_3_Ok) insertn = 3;
-				 else insertn = 2;
-				 Field[a1][a2] = insertn;
+				 Field->MoveNumbers(pos);
+				 Field->InsertRandom();
 				 DrawField();
-				 for (i = 0; i < n; i++)
+				 CountRez->Text = System::Convert::ToString(Field->CountScore());
+				 if (Field->IsWinGame())
 				 {
-					 for (j = 0; j < n; j++)
-					 {
-						 cout << setw(4) << Field[i][j];
-					 }
-					 cout << endl;
-				 }
-				 CountRez->Text = System::Convert::ToString(CountScore(Field, n));
-				 if (IsWinGame(Field, n, MaxNumber))
-				 {
-					 for (i = 0; i < n; i++)
-					 for (j = 0; j < n; j++)
-					 {
-						 Field[i][j] = 0;
-					 }
+					 Field->ClearField();
 					 
-					 system("cls");
-					 for (i = 0; i < n; i++)
-					 {
-						 for (j = 0; j < n; j++)
-						 {
-							 cout << setw(4) << Field[i][j];
-						 }
-						 cout << endl;
-					 }
+					
 					 StartBottom->Visible = true;
 					 SettingsBottom->Visible = true;
 					 StopB->Visible = false;
@@ -470,22 +414,8 @@ private: System::Void MainForm_KeyDown(System::Object^  sender, System::Windows:
 					 Counter->Visible = false;
 					 MessageBox::Show("Вы выиграли, ваш результат " + CountRez->Text);
 				 }
-				 if (IsLoseGame(Field, n))
+				 if (Field->IsLoseGame())
 				 {
-					 for (i = 0; i < n; i++)
-					 for (j = 0; j < n; j++)
-					 {
-						 Field[i][j] = 0;
-					 }
-					 system("cls");
-					 for (i = 0; i < n; i++)
-					 {
-						 for (j = 0; j < n; j++)
-						 {
-							 cout << setw(4) << Field[i][j];
-						 }
-						 cout << endl;
-					 }
 					 StartBottom->Visible = true;
 					 SettingsBottom->Visible = true;
 					 StopB->Visible = false;
@@ -520,7 +450,7 @@ private: System::Void pictureBox1_Paint(System::Object^  sender, System::Windows
 						 for (int j = 0; j < 4; j++)
 						 {
 							 e->Graphics->DrawRectangle(System::Drawing::Pens::Red, x, y, 75, 75);
-							 n = System::Convert::ToString(Field[i][j]);
+							 n = System::Convert::ToString(Field->GetElement(i,j));
 							 PointF drawPoint = PointF(x + 35, y + 35);
 							 e->Graphics->DrawString(n, drawFont, System::Drawing::Brushes::Black, drawPoint);
 							 x += 85;
@@ -543,7 +473,7 @@ private: System::Void pictureBox1_Paint(System::Object^  sender, System::Windows
 							 for (int j = 0; j < 8; j++)
 							 {
 								 e->Graphics->FillRectangle(gcnew SolidBrush(Color::Red),x,y,46,46);
-								 n = System::Convert::ToString(Field[i][j]);
+								 n = System::Convert::ToString(Field->GetElement(i,j));
 								 PointF drawPoint = PointF(x + 15, y + 15);
 								 e->Graphics->DrawString(n, drawFont, System::Drawing::Brushes::Black, drawPoint);
 								 x += 56;
