@@ -81,7 +81,9 @@
     <ClCompile Include="GameField.cpp" />
     <ClCompile Include="MainForm.cpp" />
     <ClCompile Include="Records.cpp" />
+    <ClCompile Include="RecordsClass.cpp" />
     <ClCompile Include="Settings.cpp" />
+    <ClCompile Include="SVar.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameField.h" />
@@ -91,9 +93,11 @@
     <ClInclude Include="Records.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="RecordsClass.h" />
     <ClInclude Include="Settings.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="SVar.h" />
     <ClInclude Include="Variables.h" />
   </ItemGroup>
   <ItemGroup>

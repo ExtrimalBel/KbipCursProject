@@ -333,13 +333,13 @@ private: System::Void MainForm_KeyPress(System::Object^  sender, System::Windows
 private: System::Void StartBottom_Click(System::Object^  sender, System::EventArgs^  e) {
 			 
 			 Field = gcnew GField(FieldSize,MaxNumber);
-			 Field->GetFirstRandom(Is_3_Ok);
 			 /*
 			 Field = f;
 			 
 			 GetFirstRandom(a, b, c, d, g, s, n,Is_3_Ok);
 			 
 			 */
+			 Field->GetFirstRandom(Is_3_Ok);
 			 Field->GetFirstRandom(Is_3_Ok);
 			 StartBottom->Visible = false;
 			 SettingsBottom->Visible = false;

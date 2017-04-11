@@ -1,4 +1,8 @@
-public ref class GField{
+public ref class GField
+/*
+Объект реализующий игровое поле и функции работы с ним
+*/
+{
 private:
 	int max;
 	int i, j;

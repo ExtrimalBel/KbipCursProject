@@ -6,7 +6,7 @@ void GField::GetFirstRandom( bool Is_3_ok) // ����������� 
 {
 	/* Получаем случайные числа при старте и координаты на которые их надо записаь
 	*/
-	int a, b, c, d, g, s,e,f;
+	/*int a, b, c, d, g, s,e,f;
 	a = rand() % n;
 	b = rand() % n;
 	int firstn, secondn;
@@ -49,9 +49,11 @@ void GField::GetFirstRandom( bool Is_3_ok) // ����������� 
 	else
 	{
 		f = firstn;
-	}
-	Field[a][b] = g;
-	Field[c][d] = s;
+	}*/
+	int a, b;
+	a = rand() % n;
+	b = rand() % n;
+	Field[a][b] = 2;
 }
 
 GField::GField(int size,int maxn)
@@ -72,7 +74,7 @@ GField::GField(int size,int maxn)
 	Field = f;
 }
 
-void GField::MoveNumbers(int pos)
+void GField::MoveNumbers(int pos) // Метод вызывающий методы перемещения чисел в игровом поле
 {
 
 	BackupField();
@@ -247,11 +249,12 @@ void GField::InsertRandom()
 	int a, b;
 	a = rand() % n;
 	b = rand() % n;
-	int insertn = 2;
-	if (Field[a][b] != 0)
-		this->InsertRandom();
-	else
-	Field[a][b] = insertn;
+	while (Field[a][b] != 0)
+	{
+		a = rand() % n;
+		b = rand() % n;
+	}
+	Field[a][b] = 2;
 }
 
 bool GField::IsLoseGame()

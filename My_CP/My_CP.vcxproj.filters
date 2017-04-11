@@ -27,6 +27,12 @@
     <ClCompile Include="GameField.cpp">
       <Filter>Файлы исходного кода</Filter>
     </ClCompile>
+    <ClCompile Include="SVar.cpp">
+      <Filter>Файлы исходного кода</Filter>
+    </ClCompile>
+    <ClCompile Include="RecordsClass.cpp">
+      <Filter>Файлы исходного кода</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainForm.h">
@@ -42,6 +48,12 @@
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
     <ClInclude Include="GameField.h">
+      <Filter>Заголовочные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="SVar.h">
+      <Filter>Заголовочные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="RecordsClass.h">
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
   </ItemGroup>
