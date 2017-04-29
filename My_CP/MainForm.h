@@ -50,7 +50,7 @@ namespace My_CP {
 	private: System::Windows::Forms::ContextMenuStrip^  contextMenuStrip1;
 
 	public:
-		GField ^ Field;
+		GameField::GField ^ Field;
 		MainForm(void)
 		{
 			/*
@@ -332,13 +332,8 @@ private: System::Void MainForm_KeyPress(System::Object^  sender, System::Windows
 
 private: System::Void StartBottom_Click(System::Object^  sender, System::EventArgs^  e) {
 			 
-			 Field = gcnew GField(FieldSize,MaxNumber);
-			 /*
-			 Field = f;
-			 
-			 GetFirstRandom(a, b, c, d, g, s, n,Is_3_Ok);
-			 
-			 */
+			 Field = gcnew GameField::GField(FieldSize,MaxNumber);
+
 			 Field->GetFirstRandom(Is_3_Ok);
 			 Field->GetFirstRandom(Is_3_Ok);
 			 StartBottom->Visible = false;

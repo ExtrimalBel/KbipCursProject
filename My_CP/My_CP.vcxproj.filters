@@ -24,9 +24,6 @@
     <ClCompile Include="Settings.cpp">
       <Filter>Файлы исходного кода</Filter>
     </ClCompile>
-    <ClCompile Include="GameField.cpp">
-      <Filter>Файлы исходного кода</Filter>
-    </ClCompile>
     <ClCompile Include="SVar.cpp">
       <Filter>Файлы исходного кода</Filter>
     </ClCompile>
@@ -45,9 +42,6 @@
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
     <ClInclude Include="Variables.h">
-      <Filter>Заголовочные файлы</Filter>
-    </ClInclude>
-    <ClInclude Include="GameField.h">
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
     <ClInclude Include="SVar.h">

@@ -1,13 +1,23 @@
-﻿Сборка начата 10.04.2017 19:36:03.
-     1>Проект "C:\Users\Kazimir\Source\Repos\KbipCursProject\My_CP\My_CP.vcxproj" в узле 2 (целевые объекты Build).
-     1>Link:
-         D:\VS_INSTALL\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Kazimir\Source\Repos\KbipCursProject\Debug\My_CP.exe" /INCREMENTAL /NOLOGO /ASSEMBLYRESOURCE:Debug\My_CP.MainForm.resources /ASSEMBLYRESOURCE:Debug\My_CP.Records.resources /ASSEMBLYRESOURCE:Debug\My_CP.Settings.resources /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Kazimir\Source\Repos\KbipCursProject\Debug\My_CP.pdb" /ASSEMBLYDEBUG /TLBID:1 /ENTRY:"main" /DYNAMICBASE /FIXED:NO /NXCOMPAT /MACHINE:X86 Debug\MainForm.obj
+﻿Сборка начата 28.04.2017 23:20:29.
+     1>Проект "C:\Users\Vitalik\Documents\KbipCursProject2\My_CP\My_CP.vcxproj" в узле 2 (целевые объекты Build).
+     1>ClCompile:
+         D:\Programs\VS_INSTALL\VC\bin\CL.exe /c /IC:\Users\Vitalik\Documents\KbipCursProject2\LogicClasses /AI"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\\" /AI"C:\Program Files (x86)\Windows Kits\8.1\References\CommonConfiguration\Neutral" /AI"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Facades\\" /Zi /clr /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _UNICODE /D UNICODE /EHa /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /TP /FUC:\Users\Vitalik\Documents\KbipCursProject2\Debug\LogicClasses.dll /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\mscorlib.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Data.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Drawing.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Windows.Forms.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Xml.dll" /analyze- /errorReport:prompt /clr:nostdlib MainForm.cpp
+         MainForm.cpp
+     1>c:\users\vitalik\documents\kbipcursproject2\my_cp\Settings.h(55): warning C4244: инициализация: преобразование "double" в "int", возможна потеря данных
+     1>c:\users\vitalik\documents\kbipcursproject2\my_cp\Settings.h(347): warning C4244: =: преобразование "double" в "int", возможна потеря данных
+     1>c:\users\vitalik\documents\kbipcursproject2\my_cp\MainForm.h(449): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
+     1>c:\users\vitalik\documents\kbipcursproject2\my_cp\MainForm.h(472): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
+     1>MainForm.cpp(13): warning C4829: Возможно, неправильные параметры функции main. Рекомендуемый вариант - "int main(Platform::Array<Platform::String^>^ argv)"
+       Link:
+         D:\Programs\VS_INSTALL\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Vitalik\Documents\KbipCursProject2\Debug\My_CP.exe" /INCREMENTAL /NOLOGO /ASSEMBLYRESOURCE:Debug\My_CP.MainForm.resources /ASSEMBLYRESOURCE:Debug\My_CP.Records.resources /ASSEMBLYRESOURCE:Debug\My_CP.Settings.resources /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Vitalik\Documents\KbipCursProject2\Debug\My_CP.pdb" /ASSEMBLYDEBUG /TLBID:1 /ENTRY:"main" /DYNAMICBASE /FIXED:NO /NXCOMPAT /MACHINE:X86 Debug\MainForm.obj
          Debug\Records.obj
+         Debug\RecordsClass.obj
          Debug\Settings.obj
+         Debug\SVar.obj
          "Debug\.NETFramework,Version=v4.5.AssemblyAttributes.obj"
-         My_CP.vcxproj -> C:\Users\Kazimir\Source\Repos\KbipCursProject\Debug\My_CP.exe
-     1>Сборка проекта "C:\Users\Kazimir\Source\Repos\KbipCursProject\My_CP\My_CP.vcxproj" завершена (целевые объекты Build).
+         My_CP.vcxproj -> C:\Users\Vitalik\Documents\KbipCursProject2\Debug\My_CP.exe
+     1>Сборка проекта "C:\Users\Vitalik\Documents\KbipCursProject2\My_CP\My_CP.vcxproj" завершена (целевые объекты Build).
 
 Сборка успешно завершена.
 
-Затраченное время: 00:00:00.50
+Затраченное время: 00:00:01.22
