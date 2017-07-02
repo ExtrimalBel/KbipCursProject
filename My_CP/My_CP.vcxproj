@@ -58,17 +58,20 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies />
       <EntryPointSymbol>main</EntryPointSymbol>
-      <SubSystem>NotSet</SubSystem>
+      <SubSystem>Windows</SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>WIN32;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\LogicClasses;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies />
+      <SubSystem>Windows</SubSystem>
+      <EntryPointSymbol>main</EntryPointSymbol>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -80,31 +83,23 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainForm.cpp" />
-    <ClCompile Include="Records.cpp" />
-    <ClCompile Include="RecordsClass.cpp" />
     <ClCompile Include="Settings.cpp" />
-    <ClCompile Include="SVar.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
-    <ClInclude Include="Records.h">
-      <FileType>CppForm</FileType>
-    </ClInclude>
-    <ClInclude Include="RecordsClass.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="resource1.h" />
+    <ClInclude Include="resource2.h" />
+    <ClInclude Include="resource3.h" />
     <ClInclude Include="Settings.h">
       <FileType>CppForm</FileType>
     </ClInclude>
-    <ClInclude Include="SVar.h" />
-    <ClInclude Include="Variables.h" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.h</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Records.resx">
-      <DependentUpon>Records.h</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Settings.resx">
       <DependentUpon>Settings.h</DependentUpon>
@@ -114,6 +109,12 @@
     <ProjectReference Include="..\LogicClasses\LogicClasses.vcxproj">
       <Project>{fe51c782-9362-4acd-941a-36c46841db95}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="My_CP2.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\..\ico.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

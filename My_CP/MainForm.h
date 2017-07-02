@@ -1,27 +1,21 @@
 #include <iomanip>
-#include <iostream>
+//#include <iostream>
 #include "Settings.h"
-#include "Records.h"
 #include <ctime>
+#include <time.h>
 #include <cstdlib>
 #include "GameField.h"
 #pragma once
 extern bool Is_3_Ok = false;
 extern int FieldSize = 4;
 extern int MaxNumber = 2048;
-extern bool RandomNumbers = false;
-void GetFirstRandom(int &a, int &b, int &c, int &d, int &e, int &f, int n, bool Is_3_ok);
-void MoveNumbers(int **Field,int n,int pos); // Сдесь pos указывает на то, в какую сторону будем перемещать
-int CountScore(int **Field, int n); // Данная функция считает очки путем сложения всех значений в игровом поле
-void RealMove(int **Field, int n, int x, int y, int pos);
-void GetRandom(int ** Field, int n, int &a, int &b);
 bool IsLoseGame(int **Field, int n);
 bool IsWinGame(int **Field, int n, int maxn);
 int ** BackupField(int **Field, int n);
-void FillGrid(int **grid, int n, int pos);
-void UpdateGreed(int **grid, int pos,int n);
+
 
 namespace My_CP {
+	using namespace GameField;
 	using namespace System;
 	using namespace System::ComponentModel;
 	using namespace System::Collections;
@@ -34,6 +28,7 @@ namespace My_CP {
 	/// <summary>
 	/// Сводка для MainForm
 	/// </summary>
+
 	
 	public ref class MainForm : public System::Windows::Forms::Form
 	{
@@ -41,18 +36,24 @@ namespace My_CP {
 		int n;
 		int maxn;
 		bool Is_Game_Started = false;
+		bool is_3;
 	private: System::Windows::Forms::Label^  LabelSetings;
 	private: System::Windows::Forms::Label^  StartNumber;
 	private: System::Windows::Forms::Label^  StrMaxNumber;
 	private: System::Windows::Forms::Label^  SizeField;
-	private: System::Windows::Forms::Label^  LRandomNumber;
+
 	private: System::Windows::Forms::Button^  StopB;
-	private: System::Windows::Forms::ContextMenuStrip^  contextMenuStrip1;
+
+
+	private: System::Windows::Forms::HelpProvider^  helpProvider1;
+	private: System::Windows::Forms::Button^  button1;
+
+
 
 	public:
-		GameField::GField ^ Field;
+		GField ^ Field;
 		MainForm(void)
-		{
+		{		
 			/*
 			Сдесь игровое поле представленно в виде матрицы с размером n где n задаёться на форме настроек
 			*/
@@ -78,12 +79,12 @@ namespace My_CP {
 	private: System::Windows::Forms::PictureBox^  pictureBox1;
 	protected:
 	private: System::Windows::Forms::Button^  StartBottom;
-	private: System::Windows::Forms::Button^  RecordsBottom;
+
 	private: System::Windows::Forms::Button^  SettingsBottom;
 	private: System::Windows::Forms::Label^  Counter;
 	private: System::Windows::Forms::Label^  CountRez;
 
-	private: System::Windows::Forms::TextBox^  textBox1;
+
 	private: System::ComponentModel::IContainer^  components;
 
 	private:
@@ -99,22 +100,19 @@ namespace My_CP {
 		/// </summary>
 		void InitializeComponent(void)
 		{
-			this->components = (gcnew System::ComponentModel::Container());
 			System::ComponentModel::ComponentResourceManager^  resources = (gcnew System::ComponentModel::ComponentResourceManager(MainForm::typeid));
 			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
 			this->StartBottom = (gcnew System::Windows::Forms::Button());
-			this->RecordsBottom = (gcnew System::Windows::Forms::Button());
 			this->SettingsBottom = (gcnew System::Windows::Forms::Button());
 			this->Counter = (gcnew System::Windows::Forms::Label());
 			this->CountRez = (gcnew System::Windows::Forms::Label());
-			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
 			this->LabelSetings = (gcnew System::Windows::Forms::Label());
 			this->StartNumber = (gcnew System::Windows::Forms::Label());
 			this->StrMaxNumber = (gcnew System::Windows::Forms::Label());
 			this->SizeField = (gcnew System::Windows::Forms::Label());
-			this->LRandomNumber = (gcnew System::Windows::Forms::Label());
 			this->StopB = (gcnew System::Windows::Forms::Button());
-			this->contextMenuStrip1 = (gcnew System::Windows::Forms::ContextMenuStrip(this->components));
+			this->helpProvider1 = (gcnew System::Windows::Forms::HelpProvider());
+			this->button1 = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -139,16 +137,6 @@ namespace My_CP {
 			this->StartBottom->Text = L"Начать игру";
 			this->StartBottom->UseVisualStyleBackColor = true;
 			this->StartBottom->Click += gcnew System::EventHandler(this, &MainForm::StartBottom_Click);
-			// 
-			// RecordsBottom
-			// 
-			this->RecordsBottom->Location = System::Drawing::Point(483, 342);
-			this->RecordsBottom->Name = L"RecordsBottom";
-			this->RecordsBottom->Size = System::Drawing::Size(124, 23);
-			this->RecordsBottom->TabIndex = 2;
-			this->RecordsBottom->Text = L"Рекорды";
-			this->RecordsBottom->UseVisualStyleBackColor = true;
-			this->RecordsBottom->Click += gcnew System::EventHandler(this, &MainForm::RecordsBottom_Click);
 			// 
 			// SettingsBottom
 			// 
@@ -186,14 +174,6 @@ namespace My_CP {
 			this->CountRez->Text = L"0";
 			this->CountRez->Visible = false;
 			// 
-			// textBox1
-			// 
-			this->textBox1->ForeColor = System::Drawing::Color::Olive;
-			this->textBox1->Location = System::Drawing::Point(201, 12);
-			this->textBox1->Name = L"textBox1";
-			this->textBox1->Size = System::Drawing::Size(100, 20);
-			this->textBox1->TabIndex = 6;
-			// 
 			// LabelSetings
 			// 
 			this->LabelSetings->AutoSize = true;
@@ -218,9 +198,9 @@ namespace My_CP {
 				static_cast<System::Int32>(static_cast<System::Byte>(128)));
 			this->StartNumber->Location = System::Drawing::Point(483, 95);
 			this->StartNumber->Name = L"StartNumber";
-			this->StartNumber->Size = System::Drawing::Size(116, 17);
+			this->StartNumber->Size = System::Drawing::Size(141, 17);
 			this->StartNumber->TabIndex = 8;
-			this->StartNumber->Text = L"Начальные значения";
+			this->StartNumber->Text = L"Начальные значения: 2,4";
 			// 
 			// StrMaxNumber
 			// 
@@ -230,9 +210,9 @@ namespace My_CP {
 				static_cast<System::Int32>(static_cast<System::Byte>(128)));
 			this->StrMaxNumber->Location = System::Drawing::Point(486, 127);
 			this->StrMaxNumber->Name = L"StrMaxNumber";
-			this->StrMaxNumber->Size = System::Drawing::Size(134, 13);
+			this->StrMaxNumber->Size = System::Drawing::Size(164, 13);
 			this->StrMaxNumber->TabIndex = 9;
-			this->StrMaxNumber->Text = L"Максимальное значение";
+			this->StrMaxNumber->Text = L"Максимальное значение: 2048";
 			// 
 			// SizeField
 			// 
@@ -246,18 +226,6 @@ namespace My_CP {
 			this->SizeField->TabIndex = 10;
 			this->SizeField->Text = L"Размер поля 4";
 			// 
-			// LRandomNumber
-			// 
-			this->LRandomNumber->AutoSize = true;
-			this->LRandomNumber->BackColor = System::Drawing::SystemColors::Desktop;
-			this->LRandomNumber->ForeColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(255)), static_cast<System::Int32>(static_cast<System::Byte>(255)),
-				static_cast<System::Int32>(static_cast<System::Byte>(128)));
-			this->LRandomNumber->Location = System::Drawing::Point(486, 186);
-			this->LRandomNumber->Name = L"LRandomNumber";
-			this->LRandomNumber->Size = System::Drawing::Size(185, 13);
-			this->LRandomNumber->TabIndex = 11;
-			this->LRandomNumber->Text = L"не вставлять рандомные значения";
-			// 
 			// StopB
 			// 
 			this->StopB->Location = System::Drawing::Point(486, 261);
@@ -269,38 +237,47 @@ namespace My_CP {
 			this->StopB->Visible = false;
 			this->StopB->Click += gcnew System::EventHandler(this, &MainForm::StopB_Click);
 			// 
-			// contextMenuStrip1
+			// helpProvider1
 			// 
-			this->contextMenuStrip1->Name = L"contextMenuStrip1";
-			this->contextMenuStrip1->Size = System::Drawing::Size(61, 4);
+			this->helpProvider1->HelpNamespace = L"./help.chm";
+			// 
+			// button1
+			// 
+			this->button1->Location = System::Drawing::Point(680, 422);
+			this->button1->Name = L"button1";
+			this->button1->Size = System::Drawing::Size(75, 23);
+			this->button1->TabIndex = 13;
+			this->button1->Text = L"Справка";
+			this->button1->UseVisualStyleBackColor = true;
+			this->button1->Click += gcnew System::EventHandler(this, &MainForm::button1_Click);
 			// 
 			// MainForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"$this.BackgroundImage")));
-			this->ClientSize = System::Drawing::Size(694, 468);
+			this->ClientSize = System::Drawing::Size(767, 468);
+			this->Controls->Add(this->button1);
 			this->Controls->Add(this->StopB);
-			this->Controls->Add(this->LRandomNumber);
 			this->Controls->Add(this->SizeField);
 			this->Controls->Add(this->StrMaxNumber);
 			this->Controls->Add(this->StartNumber);
 			this->Controls->Add(this->LabelSetings);
-			this->Controls->Add(this->textBox1);
 			this->Controls->Add(this->CountRez);
 			this->Controls->Add(this->Counter);
 			this->Controls->Add(this->SettingsBottom);
-			this->Controls->Add(this->RecordsBottom);
 			this->Controls->Add(this->StartBottom);
 			this->Controls->Add(this->pictureBox1);
 			this->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->ForeColor = System::Drawing::SystemColors::ControlText;
+			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->KeyPreview = true;
 			this->Name = L"MainForm";
+			this->helpProvider1->SetShowHelp(this, true);
 			this->Text = L"Игра 2048";
 			this->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &MainForm::MainForm_KeyDown);
-			this->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &MainForm::MainForm_KeyPress);
+			this->KeyUp += gcnew System::Windows::Forms::KeyEventHandler(this, &MainForm::MainForm_KeyUp);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
@@ -308,12 +285,9 @@ namespace My_CP {
 		}
 		void F_Closed(Object^ sender, EventArgs^ e)
 		{
-			textBox1->Text = System::Convert::ToString(RandomNumbers);
 			if (Is_3_Ok) StartNumber->Text = "Начальные значения" + " 3,6";
 			else StartNumber->Text = "Начальные значения" + " 2,4";
 			StrMaxNumber->Text = "Максимальное значение " + System::Convert::ToString(MaxNumber);
-			if (RandomNumbers) LRandomNumber->Text = "Вставлять рандомные значения";
-			else LRandomNumber->Text = "Не вставлять рандомные значения";
 			if (FieldSize == 8) SizeField->Text = "Размер поля 8";
 			if (FieldSize == 4) SizeField->Text = "Размер поля 4";
 
@@ -325,42 +299,97 @@ namespace My_CP {
 				 F->Closed += gcnew EventHandler(this, &MainForm::F_Closed);
 				 
 	}
-private: System::Void MainForm_KeyPress(System::Object^  sender, System::Windows::Forms::KeyPressEventArgs^  e) {
-			 
-}
 		 
 
 private: System::Void StartBottom_Click(System::Object^  sender, System::EventArgs^  e) {
 			 
-			 Field = gcnew GameField::GField(FieldSize,MaxNumber);
+			 Field = gcnew GField(FieldSize,MaxNumber,Is_3_Ok);
 
-			 Field->GetFirstRandom(Is_3_Ok);
 			 Field->GetFirstRandom(Is_3_Ok);
 			 StartBottom->Visible = false;
 			 SettingsBottom->Visible = false;
 			 StopB->Visible = true;
-			 RecordsBottom->Visible = false;
 			 Is_Game_Started = true;
 			 CountRez->Visible = true;
 			 Counter->Visible = true;
+			 is_3 = Is_3_Ok;
 			 DrawField();
 }
 private: System::Void StopB_Click(System::Object^  sender, System::EventArgs^  e) {
 			 Field->ClearField();
-			 delete (Field);
+			 delete (Field);		
+			 StopB->Visible = false;
 			 StartBottom->Visible = true;
 			 SettingsBottom->Visible = true;
-			 StopB->Visible = false;
-			 RecordsBottom->Visible = true;
 			 Is_Game_Started = false;
 			 CountRez->Visible = false;
 			 Counter->Visible = false;
 }
-private: System::Void RecordsBottom_Click(System::Object^  sender, System::EventArgs^  e) {
-			 Records ^ R = gcnew Records();
-			 R->Show();
-}
 private: System::Void MainForm_KeyDown(System::Object^  sender, System::Windows::Forms::KeyEventArgs^  e) {
+			
+}
+void DrawField()
+{
+	pictureBox1->Refresh();
+}
+private: System::Void pictureBox1_Paint(System::Object^  sender, System::Windows::Forms::PaintEventArgs^  e) {
+		
+			 if (Is_Game_Started)
+			 {
+				 if (FieldSize == 4)
+				 {
+					 int x = 15;
+					 int y = 10;
+					 String ^n;
+					 StringFormat^ drawFormat = gcnew StringFormat;
+					 drawFormat->FormatFlags = StringFormatFlags::DirectionVertical;
+					 System::Drawing::Font^ drawFont = gcnew System::Drawing::Font("Arial", 16);
+					 SolidBrush^ drawBrush = gcnew SolidBrush(Color::Black);
+					 for (int i = 0; i < 4; i++)
+					 {
+						 for (int j = 0; j < 4; j++)
+						 {
+							 SolidBrush ^Cr = GetBrash(i, j,is_3);
+							 e->Graphics->FillRectangle(Cr, x, y, 83,83);
+							 n = System::Convert::ToString(Field->GetElement(i,j));
+							 PointF drawPoint = PointF(x + 30, y + 30);
+							 e->Graphics->DrawString(n, drawFont, System::Drawing::Brushes::Black, drawPoint);
+							 x += 95;
+						 }
+						 x = 15;
+						 y += 95;
+					 }
+				 }
+					 if (FieldSize == 8)
+					 {
+						 int x = 10;
+						 int y = 10;
+						 String ^n;
+						 StringFormat^ drawFormat = gcnew StringFormat;
+						 drawFormat->FormatFlags = StringFormatFlags::DirectionVertical;
+						 System::Drawing::Font^ drawFont = gcnew System::Drawing::Font("Arial", 11);
+						 SolidBrush^ drawBrush = gcnew SolidBrush(Color::Black);
+						 for (int i = 0; i < FieldSize; i++)
+						 {
+							 for (int j = 0; j < FieldSize; j++)
+							 {
+								 SolidBrush ^Cr = GetBrash(i, j,is_3);
+								 e->Graphics->FillRectangle(Cr, x, y, 36, 36);
+								 n = System::Convert::ToString(Field->GetElement(i,j));
+								 PointF drawPoint = PointF(x + 6, y + 6);
+								 e->Graphics->DrawString(n, drawFont, System::Drawing::Brushes::Black, drawPoint);
+								 x += 47;
+							 }
+							 x = 10;
+							 y += 46;
+						 }
+				
+					 }
+			
+			 }
+}
+		 private: System::Drawing::SolidBrush ^ GetBrash(int i, int j,bool is_3);
+private: System::Void MainForm_KeyUp(System::Object^  sender, System::Windows::Forms::KeyEventArgs^  e) {
 			 // 1 - Вверх 2 - Вниз 3 - Влево 4 - Вправо
 			 int pos;
 			 bool Move_Ok = false;
@@ -372,13 +401,13 @@ private: System::Void MainForm_KeyDown(System::Object^  sender, System::Windows:
 			 }
 			 if (e->KeyCode == Keys::Right)
 			 {
-				 
+
 				 pos = 4;
 				 Move_Ok = true;
 			 }
 			 if (e->KeyCode == Keys::Up)
 			 {
-				
+
 				 pos = 1;
 				 Move_Ok = true;
 			 }
@@ -389,21 +418,20 @@ private: System::Void MainForm_KeyDown(System::Object^  sender, System::Windows:
 			 }
 			 if (Move_Ok)
 			 {
-				 
-				 textBox1->Text = System::Convert::ToString(pos);
+				 //System::Media::SoundPlayer ^simpleSound = gcnew System::Media::SoundPlayer("Click.wav");
+				 //simpleSound->Play();
+				 std::cout << pos << endl;
 				 Field->MoveNumbers(pos);
-				 Field->InsertRandom();
 				 DrawField();
 				 CountRez->Text = System::Convert::ToString(Field->CountScore());
 				 if (Field->IsWinGame())
 				 {
-					 Field->ClearField();
-					 
-					
+
+
 					 StartBottom->Visible = true;
 					 SettingsBottom->Visible = true;
 					 StopB->Visible = false;
-					 RecordsBottom->Visible = true;
+					// RecordsBottom->Visible = true;
 					 Is_Game_Started = false;
 					 CountRez->Visible = false;
 					 Counter->Visible = false;
@@ -414,72 +442,19 @@ private: System::Void MainForm_KeyDown(System::Object^  sender, System::Windows:
 					 StartBottom->Visible = true;
 					 SettingsBottom->Visible = true;
 					 StopB->Visible = false;
-					 RecordsBottom->Visible = true;
 					 Is_Game_Started = false;
 					 CountRez->Visible = false;
 					 Counter->Visible = false;
 					 MessageBox::Show("Вы проиграли, ваш результат " + CountRez->Text);
 				 }
-				 
+				 Field->InsertRandom();
+				 DrawField();
 			 }
 
 }
-void DrawField()
+private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e)
 {
-	pictureBox1->Refresh();
-}
-private: System::Void pictureBox1_Paint(System::Object^  sender, System::Windows::Forms::PaintEventArgs^  e) {
-			 if (Is_Game_Started)
-			 {
-				 if (FieldSize == 4)
-				 {
-					 int x = 10;
-					 int y = 10;
-					 String ^n;
-					 StringFormat^ drawFormat = gcnew StringFormat;
-					 drawFormat->FormatFlags = StringFormatFlags::DirectionVertical;
-					 System::Drawing::Font^ drawFont = gcnew System::Drawing::Font("Arial", 16);
-					 SolidBrush^ drawBrush = gcnew SolidBrush(Color::Black);
-					 for (int i = 0; i < 4; i++)
-					 {
-						 for (int j = 0; j < 4; j++)
-						 {
-							 e->Graphics->DrawRectangle(System::Drawing::Pens::Red, x, y, 75, 75);
-							 n = System::Convert::ToString(Field->GetElement(i,j));
-							 PointF drawPoint = PointF(x + 35, y + 35);
-							 e->Graphics->DrawString(n, drawFont, System::Drawing::Brushes::Black, drawPoint);
-							 x += 85;
-						 }
-						 x = 10;
-						 y += 85;
-					 }
-				 }
-					 if (FieldSize == 8)
-					 {
-						 int x = 10;
-						 int y = 10;
-						 String ^n;
-						 StringFormat^ drawFormat = gcnew StringFormat;
-						 drawFormat->FormatFlags = StringFormatFlags::DirectionVertical;
-						 System::Drawing::Font^ drawFont = gcnew System::Drawing::Font("Arial", 16);
-						 SolidBrush^ drawBrush = gcnew SolidBrush(Color::Black);
-						 for (int i = 0; i < 8; i++)
-						 {
-							 for (int j = 0; j < 8; j++)
-							 {
-								 e->Graphics->FillRectangle(gcnew SolidBrush(Color::Red),x,y,46,46);
-								 n = System::Convert::ToString(Field->GetElement(i,j));
-								 PointF drawPoint = PointF(x + 15, y + 15);
-								 e->Graphics->DrawString(n, drawFont, System::Drawing::Brushes::Black, drawPoint);
-								 x += 56;
-							 }
-							 x = 10;
-							 y += 56;
-						 }
-				
-					 }
-			
-			 }
+			 Help::ShowHelp(this, helpProvider1->HelpNamespace);
 }
 };
 

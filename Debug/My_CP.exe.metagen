@@ -1,5 +1,4 @@
   My_CP.MainForm.resources - Embedded, ContainedInManifestFile, 
-  My_CP.Records.resources - Embedded, ContainedInManifestFile, 
   My_CP.Settings.resources - Embedded, ContainedInManifestFile, 
 ImageRuntimeVersion: v4.0.30319
 Assembly My_CP, Version=0.0.*, Culture=Инвариантный язык (Инвариантная страна): 
@@ -23,9 +22,6 @@ Assembly LogicClasses, Version=1.0.*, Culture=Инвариантный язык 
 Class My_CP.Settings: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
   :System.Windows.Forms.Form
     Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
-Class My_CP.Records: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
-  :System.Windows.Forms.Form
-    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
 Class My_CP.MainForm: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
   :System.Windows.Forms.Form
     Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
@@ -33,4 +29,5 @@ Class My_CP.MainForm: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
     Int32 n : Public
     Int32 maxn : Public
     Boolean Is_Game_Started : Public
+    Boolean is_3 : Public
     GameField.GField Field : Public

@@ -1,69 +1,40 @@
 ﻿#include "Stdafx.h"
 #include "GameField.h"
-#include <cstdlib>
+#include <cstdlib>				 
+#include <iostream>
 #include <ctime>
 
 using namespace	GameField;
 
-void GField::GetFirstRandom(bool Is_3_ok) // ����������� � ������ ���� ������������� ��������� ������
+void GField::GetFirstRandom(bool Is_3_ok)
 {
-	/* Получаем случайные числа при старте и координаты на которые их надо записаь
-	*/
-	/*int a, b, c, d, g, s,e,f;
-	a = rand() % n;
-	b = rand() % n;
-	int firstn, secondn;
-	srand(time(NULL));
-
-
-	if (Is_3_ok)
+	int i, j; 
+	int sn; 
+	if (startnumber == 2) sn = 2;
+	else sn = 3;
+	int x;
+	x = rand() % 2;
+	i = rand() % n;
+	j = rand() % n;
+	if (x == 1) Field[i][j] = sn + sn;
+	else Field[i][j] = sn;
+	while (Field[i][j] != 0)
 	{
-	firstn = 3;
-	secondn = 6;
+		i = rand() % n;
+		j = rand() % n;
 	}
-	else
-	{
-	firstn = 2;
-	secondn = 4;
-	}
-	do
-	{
-	c = rand() % n;
-	_sleep(2);
-	d = rand() % n;
-	} while (a == c && b == d);
-	_sleep(2);
-	e = rand() % 1;
-	if (e == 1)
-	{
-	e = firstn;
-	f = secondn;
-	}
-	else
-	{
-	e = firstn;
-	_sleep(2);
-	f = rand() % 1;
-	}
-	if (f == 1)
-	{
-	f = secondn;
-	}
-	else
-	{
-	f = firstn;
-	}*/
-	int a, b;
-	a = rand() % n;
-	b = rand() % n;
-	Field[a][b] = 2;
+	x = rand() % 2;
+	if (x == 1) Field[i][j] = sn + sn;
+	else Field[i][j] = sn;
 }
 
-GField::GField(int size, int maxn)
+GField::GField(int size, int maxn, bool Is_3_Ok)
 {
 	max = maxn;
 	int i, j;
 	n = size;
+	if (Is_3_Ok) startnumber = 3;
+	else startnumber = 2;
 	int **f = new int *[n]; // Поле игры
 	for (i = 0; i < n; i++)
 	{
@@ -84,11 +55,21 @@ GField::GField(int size, int maxn)
 
 void GField::MoveNumbers(int pos) // Метод вызывающий методы перемещения чисел в игровом поле
 {
-
+	bool isSum = false;
+	bool isMove = false;
 	BackupField();
-	FillGrid(pos);
-	UpdateGreed(pos);
-	FillGrid(pos);
+
+	FillGrid(pos,isSum);
+	isSum = false;
+	UpdateGreed(pos,isMove);
+	isMove = false;
+	do
+	{	   
+		isMove = false;
+		isSum = false;
+		FillGrid(pos,&isSum);
+		UpdateGreed(pos,isMove);
+	} while (isMove);
 }
 
 void GField::BackupField()
@@ -105,7 +86,7 @@ void GField::BackupField()
 }
 
 
-void GField::FillGrid(int pos)
+void GField::FillGrid(int pos, bool Move)
 {
 	switch (pos)
 	{
@@ -118,6 +99,7 @@ void GField::FillGrid(int pos)
 				for (int k = j + 1; k<n; k++)
 				if (Field[k][i])
 				{
+					Move = true;
 					Field[j][i] = Field[k][i];
 					Field[k][i] = 0;
 					break;
@@ -135,6 +117,7 @@ void GField::FillGrid(int pos)
 				for (int k = j - 1; k >= 0; k--)
 				if (Field[k][i])
 				{
+					Move = true;
 					Field[j][i] = Field[k][i];
 					Field[k][i] = 0;
 					break;
@@ -151,6 +134,7 @@ void GField::FillGrid(int pos)
 				for (int k = j + 1; k<n; k++)
 				if (Field[i][k])
 				{
+					Move = true;
 					Field[i][j] = Field[i][k];
 					Field[i][k] = 0;
 					break;
@@ -169,6 +153,7 @@ void GField::FillGrid(int pos)
 				for (int k = j - 1; k >= 0; k--)
 				if (Field[i][k])
 				{
+					Move = true;
 					Field[i][j] = Field[i][k];
 					Field[i][k] = 0;
 					break;
@@ -180,7 +165,7 @@ void GField::FillGrid(int pos)
 	}
 }
 
-void GField::UpdateGreed(int pos)
+void GField::UpdateGreed(int pos,bool &Sum)
 {
 
 	switch (pos)
@@ -191,6 +176,7 @@ void GField::UpdateGreed(int pos)
 		{
 			if (Field[j][i] && Field[j][i] == Field[j + 1][i])
 			{
+				Sum = true;
 				Field[j][i] += Field[j + 1][i];
 				Field[j + 1][i] = 0;
 
@@ -203,6 +189,7 @@ void GField::UpdateGreed(int pos)
 		{
 			if (Field[j][i] && Field[j][i] == Field[j - 1][i])
 			{
+				Sum = true;
 				Field[j][i] += Field[j - 1][i];
 				Field[j - 1][i] = 0;
 
@@ -215,7 +202,7 @@ void GField::UpdateGreed(int pos)
 		{
 			if (Field[i][j] && Field[i][j] == Field[i][j + 1])
 			{
-
+				Sum = true;
 				Field[i][j] += Field[i][j + 1];
 				Field[i][j + 1] = 0;
 
@@ -228,7 +215,7 @@ void GField::UpdateGreed(int pos)
 		{
 			if (Field[i][j] && Field[i][j] == Field[i][j - 1])
 			{
-
+				Sum = true;
 				Field[i][j] += Field[i][j - 1];
 				Field[i][j - 1] = 0;
 			}
@@ -262,7 +249,7 @@ void GField::InsertRandom()
 		a = rand() % n;
 		b = rand() % n;
 	}
-	Field[a][b] = 2;
+	Field[a][b] = startnumber;
 }
 
 bool GField::IsLoseGame()
@@ -313,3 +300,4 @@ bool GField::IsFieldEqual()
 	}
 	return Equal;
 }
+
